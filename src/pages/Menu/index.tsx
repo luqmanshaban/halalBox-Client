@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Navbar from '../../layout/Navbar'
-import MenuProvider from '../../store/MenuContext'
 import Search from './Search'
 import Filter from './Filter'
 import FoodMenus from './FoodMenus'
@@ -14,7 +13,6 @@ const Menu = () => {
   
   return (
     <div>
-      <MenuProvider>
         <header>
             <Navbar />
         </header>
@@ -25,7 +23,6 @@ const Menu = () => {
           </section>
           <FoodMenus searched={searchedFood} active={active}/>
         </main>
-      </MenuProvider>
       <footer className='mt-20'>
         <Footer />
       </footer>
