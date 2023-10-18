@@ -8,7 +8,7 @@ const Navbar = () => {
     const [nav, setNav] = useState(false)
     const toggleNav = () => setNav(!nav)
   return (
-    <nav className='bg-white p-5 font-sans flex justify-between items-center shadow-md fixed w-full md:flex md:justify-between md:items-center md:shadow-md md:fixed md:w-full md:px-20'>
+    <nav className='bg-white p-5 font-sans flex justify-between items-center shadow-md fixed w-full md:flex md:justify-between md:items-center  z-10 md:shadow-md md:fixed md:w-full md:px-20'>
         <Logo />
         <ul className={`md:flex md:justify-between md:flex-row md:items-center md:gap-x-10 hidden`}>
             <li>
@@ -20,30 +20,30 @@ const Navbar = () => {
             <li>
             <Link to='/contact'>Contact Us</Link>
             </li>
-        </ul>
-        <ul className={`md:flex md:justify-between md:flex-row md:items-center md:gap-x-10 hidden`}>
             <li><BiCartAlt size={30}/></li>
+        </ul>
+        {/* <ul className={`md:flex md:justify-between md:flex-row md:items-center md:gap-x-10 hidden`}>
             <li>Login</li>
             <li>Sign Up</li>
-        </ul>
+        </ul> */}
 
         <div className={`md:hidden transition-transform text-lg  ${!nav ? 'fixed left-[100%] ease-in-out duration-[0.7s]' : 'fixed left-0 top-[80px] px-2 py-20 bg-black text-white w-[80%] shadow-lg ease-in-out duration-[0.7s] h-full'}`}>
         <ul>
-           <li>
+           <li onClick={toggleNav}>
                <Link to='/'>Home</Link>
-               </li>
-               <li>
-                   <Link to='/menu'>Menu</Link>
-               </li>
-               <li>
+            </li>
+            <li onClick={toggleNav}>
+                <Link to='/menu'>Menu</Link>
+            </li>
+            <li onClick={toggleNav}>
                <Link to='/contact'>Contact Us</Link>
             </li>
-        </ul>
-        <ul>
         <li className='fixed top-6 right-16'><BiCartAlt size={30} color='black'/></li>
+        </ul>
+        {/* <ul>
             <li>Login</li>
             <li>Sign Up</li>
-        </ul>
+        </ul> */}
         </div>
 
         <div onClick={toggleNav} className='block md:hidden'>

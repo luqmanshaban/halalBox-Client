@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { createContext, useMemo, useState } from 'react'
+import React, { createContext, useEffect, useMemo, useState } from 'react'
 
 export const MenuContext = createContext();
 
@@ -62,7 +62,9 @@ const MenuProvider= ({ children }) => {
         all: menus
     }
 
-
+useEffect(() => {
+  getMenus()
+},[])
     const contextValue = {
         category,
         getMenus,
