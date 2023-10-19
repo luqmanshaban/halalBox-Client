@@ -22,10 +22,10 @@ const Cart = () => {
                               <h1 className='text-lg font-bold'>{menu.name}</h1>
                               <p>ksh {menu.price}</p>
                               <span>x {itemCount[menu.name] || 0}</span>
-                              <button onClick={() => handleAdd(menu.name)} className='bg-black text-white  p-2 flex justify-center items-center rounded-full'>
+                              <button onClick={() => handleAdd(menu.name)} disabled={((itemCount[menu.name]) >= 5)} className='bg-black text-white  p-2 flex justify-center items-center rounded-full'>
                                   <AiOutlinePlus />
                               </button>
-                              <button onClick={() => handleMinus(menu.name)} className='bg-black text-white  p-2 flex justify-center items-center rounded-full'>
+                              <button onClick={() => handleMinus(menu.name)}  disabled={(itemCount[menu.name] || 0 ) === 0} className='bg-black text-white  p-2 flex justify-center items-center rounded-full'>
                                   <AiOutlineMinus color='white' />
                               </button>
                               <button onClick={() => removeFromCart(menu.name)}>
