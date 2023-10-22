@@ -3,10 +3,15 @@ import Navbar from '../../layout/Navbar'
 import { MenuContext } from '../../store/MenuContext'
 import { AiOutlinePlus, AiOutlineMinus, AiFillDelete } from 'react-icons/ai'
 import PayPalService from '../../services/PayPalService'
+import Loading from '../../components/Loading'
+
 
 const Cart = () => {
-    const { total, items, handleAdd, handleMinus, itemCount, removeFromCart, specialNote, handleChange } = useContext(MenuContext)
+    const { total, items, handleAdd, handleMinus, itemCount, removeFromCart, specialNote, handleChange, onPaymentBtnClick, PaymentClicked } = useContext(MenuContext)
     const [clicked, setClicked] = useState(false)
+    // const [onPaymentBtnClick, setOnPaymentBtnClick] = useState(false)
+
+    // const PaymentClicked = () => setOnPaymentBtnClick(!onPaymentBtnClick)
   return (
     <div>
         <header>
@@ -62,7 +67,10 @@ const Cart = () => {
                         Checkout With PayPal 
                         <BsPaypal color='white' size={30}/>
                     </button> */}
-                    <PayPalService total={total} items={items}/>
+                    <figure onClick={PaymentClicked}>
+                      <PayPalService total={total} items={items} />
+                    </figure>
+                    {onPaymentBtnClick && <Loading />}
                 </article>
             </section>
             }

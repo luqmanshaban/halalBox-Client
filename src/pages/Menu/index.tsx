@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Navbar from '../../layout/Navbar'
 import Search from './Search'
 import Filter from './Filter'
 import FoodMenus from './FoodMenus'
 import Footer from '../../layout/Footer'
+import { MenuContext } from '../../store/MenuContext'
+import PageLoading from '../../components/PageLoading'
 
 const Menu = () => {
+  const { menuLoaded } = useContext(MenuContext)
   const [active, setActive] = useState([true, false, false, false, false, false, false])
   const [searchedFood, setSearchedFood] = useState([])
   const handleClick = (index: number) => setActive(active.map((value, i) => i === index))
@@ -21,7 +24,7 @@ const Menu = () => {
             <Filter active={active} handleClick={handleClick} />
             <Search searchedFood={setSearchedFood} toggleMenus={handleClick}/>
           </section>
-          <FoodMenus searched={searchedFood} active={active}/>
+          {menuLoaded ? <FoodMenus searched={searchedFood} active={active}/> : <PageLoading />}
         </main>
       <footer className='mt-20'>
         <Footer />

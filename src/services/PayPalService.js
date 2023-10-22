@@ -1,13 +1,12 @@
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { LiaFortAwesomeAlt } from 'react-icons/lia'
+import { MenuContext } from '../store/MenuContext';
 
-
-function Message({ content }) {
-    return <p>{content}</p>
-}
 
 const PayPalService = ({ total, items }) => {
+  const { setOnPaymentBtnClick, setItems, setItemCount, setSpecialNote } = useContext(MenuContext)
     const initialOptions = {
         "client-id": "AZlnOA0ymWBH8oExWSu4D_GYPxZmXP_t3LO_Tw3xYfU-X2T1oqv630bIHz_VSJnGrc4V2qGup4jTtBlC",
         "enable-funding": "card",
@@ -20,7 +19,8 @@ const PayPalService = ({ total, items }) => {
           items: items
         }
       ]
-      const [message, setMessage] = useState('')
+      const [SuccesMessage, setSuccessMessage] = useState('')      
+      const [ErrorMessage, setErrorMessage] = useState('')      
   return (
     <div>
        <PayPalScriptProvider options={initialOptions}>
@@ -30,8 +30,9 @@ const PayPalService = ({ total, items }) => {
             layout: "vertical",
           }}
           createOrder={async () => {
+            setOnPaymentBtnClick(true)
             try {
-              const response = await axios.post("https://halalbox.cyclic.app/api/orders", {cart});
+              const response = await axios.post("http://localhost:8000/api/orders", {cart});
 
               const orderData = response.data;
 
@@ -42,17 +43,21 @@ const PayPalService = ({ total, items }) => {
                 const errorMessage = errorDetail
                   ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
                   : JSON.stringify(orderData);
+                setOnPaymentBtnClick(false)
 
                 throw new Error(errorMessage);
               }
             } catch (error) {
-              console.error(error);
-              setMessage(`Could not initiate PayPal Checkout...${error}`);
+              setErrorMessage(`Could not initiate PayPal Checkout`);
+              setTimeout(() => {
+                setErrorMessage('');
+              },10000)
+              setOnPaymentBtnClick(false)
             }
           }}
           onApprove={async (data, actions) => {
             try {
-              const response = await axios.post(`https://halalbox.cyclic.app/api/orders/${data.orderID}/capture`);
+              const response = await axios.post(`http://localhost:8000/api/orders/${data.orderID}/capture`);
 
               const orderData = response.data;
               const errorDetail = orderData?.details?.[0];
@@ -67,28 +72,36 @@ const PayPalService = ({ total, items }) => {
                   `${errorDetail.description} (${orderData.debug_id})`,
                 );
               } else {
-                alert('Order created')
                 const transaction =
                   orderData.purchase_units[0].payments.captures[0];
-                setMessage(
-                  `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`,
-                );
-                console.log(
-                  "Capture result",
-                  orderData,
-                  JSON.stringify(orderData, null, 2),
-                );
+                  setSuccessMessage(
+                    `ORDER ${transaction.status}`,
+                  );
+                  setOnPaymentBtnClick(false)
+                  setTimeout(() => {
+                    setSuccessMessage('')
+                    setItemCount({})
+                    setItems([])
+                    setSpecialNote('')
+                },5000)
               }
             } catch (error) {
               console.error(error);
-              setMessage(
-                `Sorry, your transaction could not be processed...${error}`,
+              setErrorMessage(
+                `Sorry, your transaction could not be processed`,
               );
+              setOnPaymentBtnClick(false)
+              setTimeout(() => {
+                setErrorMessage('')
+              },5000)
+
             }
           }}
         />
       </PayPalScriptProvider>
-      <Message content={message} />
+      
+     {SuccesMessage !== '' && <p className='text-center bg-green-600 text-white fixed md:top-10 md:left-[730px]  z-20 p-2 rounded-lg flex justify-center items-center gap-x-2'> <LiaFortAwesomeAlt size={30}/> {SuccesMessage}</p> }
+     {ErrorMessage !== '' && <p> {ErrorMessage}</p> }
     </div>
   )
 }

@@ -8,6 +8,10 @@ const MenuProvider= ({ children }) => {
     const [items, setItems] = useState([]);
     const [itemCount, setItemCount] = useState({});
     const [specialNote, setSpecialNote] = useState('')
+    const [onPaymentBtnClick, setOnPaymentBtnClick] = useState(false)
+    const [menuLoaded, setMenuLoaded] = useState(false)
+
+    const PaymentClicked = () => setOnPaymentBtnClick(!onPaymentBtnClick)
 
     const handleChange = e => setSpecialNote(e.target.value)
     // const [orderCreated, setOrderCreated] = useState(false)
@@ -45,6 +49,7 @@ const MenuProvider= ({ children }) => {
         try {
             const response = await axios.get('https://halalbox.cyclic.app/api/menu')
             setMenus(response.data.menus)
+            setMenuLoaded(true)
             // console.log(response.data);
         } catch (error) {
             console.error(error);
@@ -86,6 +91,9 @@ useEffect(() => {
         category,
         getMenus,
         items,
+        setItemCount,
+        setItems,
+        setSpecialNote,
         handleAdd,
         handleMinus,
         count,
@@ -95,7 +103,11 @@ useEffect(() => {
         itemCount,
         specialNote,
         handleChange,
-        checkoutWithPaypal
+        checkoutWithPaypal,
+        onPaymentBtnClick,
+        setOnPaymentBtnClick,
+        PaymentClicked,
+        menuLoaded
     }
     return (
         <MenuContext.Provider value={contextValue}>
