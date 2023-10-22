@@ -8,7 +8,7 @@ type Props = {
 }
 
 const Search: React.FC<Props> = ({ toggleMenus, searchedFood }) => {
-    const [food, setFood] = useState()
+    const [food, setFood] = useState('')
     const handleChange = (event:any) => {
         setFood(event.target.value);
         toggleMenus(6)

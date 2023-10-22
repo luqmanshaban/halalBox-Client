@@ -3,9 +3,10 @@ import Navbar from '../../layout/Navbar'
 import { MenuContext } from '../../store/MenuContext'
 import { BsPaypal } from 'react-icons/bs'
 import { AiOutlinePlus, AiOutlineMinus, AiFillDelete } from 'react-icons/ai'
+import PayPalService from '../../services/PayPalService'
 
 const Cart = () => {
-    const { total, items, handleAdd, handleMinus, itemCount, removeFromCart, specialNote, handleChange } = useContext(MenuContext)
+    const { total, items, handleAdd, handleMinus, itemCount, removeFromCart, specialNote, handleChange, checkoutWithPaypal } = useContext(MenuContext)
     const [clicked, setClicked] = useState(false)
   return (
     <div>
@@ -25,7 +26,7 @@ const Cart = () => {
                               <button onClick={() => handleAdd(menu.name)} disabled={((itemCount[menu.name]) >= 5)} className='bg-black text-white  p-2 flex justify-center items-center rounded-full'>
                                   <AiOutlinePlus />
                               </button>
-                              <button onClick={() => handleMinus(menu.name)}  disabled={(itemCount[menu.name] || 0 ) === 0} className='bg-black text-white  p-2 flex justify-center items-center rounded-full'>
+                              <button onClick={() => handleMinus(menu.name)}  disabled={(itemCount[menu.name] || 0 ) === 1} className='bg-black text-white  p-2 flex justify-center items-center rounded-full'>
                                   <AiOutlineMinus color='white' />
                               </button>
                               <button onClick={() => removeFromCart(menu.name)}>
@@ -58,10 +59,11 @@ const Cart = () => {
 
                 <article className='flex flex-col gap-y-2'>
                     <p className='text-lg font-bold text-blue-950'>Total: <span className='text-gray-500 italic'>{total} ksh</span></p>
-                    <button className='bg-blue-500 px-5 py-2 rounded-md text-black font-bold flex justify-center items-center gap-x-2'>
+                    {/* <button onClick={checkoutWithPaypal} className='bg-blue-500 px-5 py-2 rounded-md text-black font-bold flex justify-center items-center gap-x-2'>
                         Checkout With PayPal 
                         <BsPaypal color='white' size={30}/>
-                    </button>
+                    </button> */}
+                    <PayPalService total={total} items={items}/>
                 </article>
             </section>
             }

@@ -27,7 +27,6 @@ const MenuProvider= ({ children }) => {
   
     const addToCart = (name, price, img, itemQuantity) => {
       setItems((prev) => [...prev, { name, price, img, itemQuantity }]);
-      console.log(items);
     };
   
     const removeFromCart = (name) => setItems((prev) => prev.filter((item) => item.name !== name));
@@ -41,13 +40,28 @@ const MenuProvider= ({ children }) => {
       );
     }, [itemCount, items]);
 
+
     const getMenus = async() => {
         try {
             const response = await axios.get('https://halalbox.cyclic.app/api/menu')
             setMenus(response.data.menus)
+            // console.log(response.data);
         } catch (error) {
             console.error(error);
         }
+    }
+
+    const order = {
+      amount: total,
+      cart: items
+    }
+    const checkoutWithPaypal = async() => {
+      try {
+        const response = await axios.post('http://localhost:8000/api/paypal', order);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     const meals = menus.filter(menu => menu.category === 'meals')
@@ -80,7 +94,8 @@ useEffect(() => {
         removeFromCart,
         itemCount,
         specialNote,
-        handleChange
+        handleChange,
+        checkoutWithPaypal
     }
     return (
         <MenuContext.Provider value={contextValue}>
