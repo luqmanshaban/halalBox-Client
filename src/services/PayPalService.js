@@ -31,7 +31,7 @@ const PayPalService = ({ total, items }) => {
           }}
           createOrder={async () => {
             try {
-              const response = await axios.post("http://localhost:8000/api/orders", {cart});
+              const response = await axios.post("https://halalbox.cyclic.app/api/orders", {cart});
 
               const orderData = response.data;
 
@@ -52,7 +52,7 @@ const PayPalService = ({ total, items }) => {
           }}
           onApprove={async (data, actions) => {
             try {
-              const response = await axios.post(`http://localhost:8000/api/orders/${data.orderID}/capture`);
+              const response = await axios.post(`https://halalbox.cyclic.app/api/orders/${data.orderID}/capture`);
 
               const orderData = response.data;
               const errorDetail = orderData?.details?.[0];
