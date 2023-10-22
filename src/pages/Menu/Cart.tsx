@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react'
 import Navbar from '../../layout/Navbar'
 import { MenuContext } from '../../store/MenuContext'
-import { BsPaypal } from 'react-icons/bs'
 import { AiOutlinePlus, AiOutlineMinus, AiFillDelete } from 'react-icons/ai'
 import PayPalService from '../../services/PayPalService'
 
 const Cart = () => {
-    const { total, items, handleAdd, handleMinus, itemCount, removeFromCart, specialNote, handleChange, checkoutWithPaypal } = useContext(MenuContext)
+    const { total, items, handleAdd, handleMinus, itemCount, removeFromCart, specialNote, handleChange } = useContext(MenuContext)
     const [clicked, setClicked] = useState(false)
   return (
     <div>
