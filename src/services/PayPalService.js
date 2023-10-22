@@ -100,7 +100,7 @@ const PayPalService = ({ total, items }) => {
         />
       </PayPalScriptProvider>
       
-     {SuccesMessage !== '' && <p className='text-center bg-green-600 text-white fixed md:top-10 md:left-[730px]  z-20 p-2 rounded-lg flex justify-center items-center gap-x-2'> <LiaFortAwesomeAlt size={30}/> {SuccesMessage}</p> }
+     {SuccesMessage !== '' && <p className='text-center bg-green-600 text-white fixed top-5 left-[150px] md:top-10 md:left-[730px]  z-20 p-2 rounded-lg flex justify-center items-center gap-x-2'> <LiaFortAwesomeAlt size={30}/> {SuccesMessage}</p> }
      {ErrorMessage !== '' && <p> {ErrorMessage}</p> }
     </div>
   )
