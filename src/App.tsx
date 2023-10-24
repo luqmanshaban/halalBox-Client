@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Contact from './pages/Contact';
 import Cart from './pages/Menu/Cart';
+import TrackOrder from './pages/TrackOrder';
 function App() {
   return (
     <div>
@@ -12,6 +13,7 @@ function App() {
         <Route path='/menu' element={<Menu />}/>
         <Route path='/contact' element={<Contact />}/>
         <Route path='/cart' element={<Cart />}/>
+        <Route path='/order' element={<TrackOrder />}/>
       </Routes>
     </div>
   );

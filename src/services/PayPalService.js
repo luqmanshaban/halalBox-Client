@@ -20,7 +20,10 @@ const PayPalService = ({ total, items }) => {
         }
       ]
       const [SuccesMessage, setSuccessMessage] = useState('')      
-      const [ErrorMessage, setErrorMessage] = useState('')      
+      const [ErrorMessage, setErrorMessage] = useState('')
+      setTimeout(() => {
+        localStorage.removeItem('order_id')
+      },3_600_000)
   return (
     <div>
        <PayPalScriptProvider options={initialOptions}>
@@ -72,8 +75,9 @@ const PayPalService = ({ total, items }) => {
                   `${errorDetail.description} (${orderData.debug_id})`,
                 );
               } else {
-                const transaction =
-                  orderData.purchase_units[0].payments.captures[0];
+                const transaction = orderData.purchase_units[0].payments.captures[0];
+                localStorage.setItem('order_id', orderData.id)
+                console.log(orderData.id);
                   setSuccessMessage(
                     `ORDER ${transaction.status}`,
                   );
