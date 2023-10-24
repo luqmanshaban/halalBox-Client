@@ -4,12 +4,14 @@ import { MenuContext } from '../../store/MenuContext'
 import { AiOutlinePlus, AiOutlineMinus, AiFillDelete } from 'react-icons/ai'
 import PayPalService from '../../services/PayPalService'
 import Loading from '../../components/Loading'
+import { Link } from 'react-router-dom'
 
 
 const Cart = () => {
     const { total, items, handleAdd, handleMinus, itemCount, removeFromCart, specialNote, handleChange, onPaymentBtnClick, PaymentClicked } = useContext(MenuContext)
     const [clicked, setClicked] = useState(false)
     // const [onPaymentBtnClick, setOnPaymentBtnClick] = useState(false)
+    const [transaction_id, setTransaction_id] = useState('')
 
     // const PaymentClicked = () => setOnPaymentBtnClick(!onPaymentBtnClick)
   return (
@@ -68,7 +70,7 @@ const Cart = () => {
                         <BsPaypal color='white' size={30}/>
                     </button> */}
                     <figure onClick={PaymentClicked}>
-                      <PayPalService total={total} items={items} />
+                      <PayPalService total={total} items={items} setTransaction_id={setTransaction_id}/>
                     </figure>
                     {onPaymentBtnClick && <Loading />}
                 </article>
@@ -76,9 +78,14 @@ const Cart = () => {
             }
             {
               items.length === 0 && <div>
-                <div className='mt-20 md:h-[400px] md:w-[700px] flex justify-center items-center text-center shadow-xl border bg-white'>
+                <div className='mt-20 md:h-[400px] md:w-[700px] md:py-2 py-52 flex flex-col justify-center items-center text-center shadow-xl border bg-white'>
                  <p className='text-2xl font-bold'>Cart Is Empty</p>
+                 <Link to='/menu' className='w-[120px] p-2 bg-black  text-white font-bold rounded-lg'>Go To Menu</Link>
                 </div>
+                {transaction_id !== '' && <article className='my-10 text-center'>
+                    <p className='italic'>Copy Your transaction ID and track your order <Link to='/order' className='text-blue-700 font-bold'>HERE</Link></p>
+                    <p>Transaction ID: <span className='font-bold'>{transaction_id}</span></p>
+                </article>}
               </div>
             }
         </main>

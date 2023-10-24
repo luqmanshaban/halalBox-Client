@@ -2,10 +2,11 @@ import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import React, { useContext, useState } from 'react'
 import { LiaFortAwesomeAlt } from 'react-icons/lia'
+import { MdEmail } from 'react-icons/md'
 import { MenuContext } from '../store/MenuContext';
 
 
-const PayPalService = ({ total, items }) => {
+const PayPalService = ({ total, items, setTransaction_id }) => {
   const { setOnPaymentBtnClick, setItems, setItemCount, setSpecialNote } = useContext(MenuContext)
     const initialOptions = {
         "client-id": "AZlnOA0ymWBH8oExWSu4D_GYPxZmXP_t3LO_Tw3xYfU-X2T1oqv630bIHz_VSJnGrc4V2qGup4jTtBlC",
@@ -21,9 +22,7 @@ const PayPalService = ({ total, items }) => {
       ]
       const [SuccesMessage, setSuccessMessage] = useState('')      
       const [ErrorMessage, setErrorMessage] = useState('')
-      setTimeout(() => {
-        localStorage.removeItem('order_id')
-      },3_600_000)
+     
   return (
     <div>
        <PayPalScriptProvider options={initialOptions}>
@@ -35,7 +34,7 @@ const PayPalService = ({ total, items }) => {
           createOrder={async () => {
             setOnPaymentBtnClick(true)
             try {
-              const response = await axios.post("https://halalbox.cyclic.app/api/orders", {cart});
+              const response = await axios.post("http://localhost:8000/api/orders", {cart});
 
               const orderData = response.data;
 
@@ -76,7 +75,7 @@ const PayPalService = ({ total, items }) => {
                 );
               } else {
                 const transaction = orderData.purchase_units[0].payments.captures[0];
-                localStorage.setItem('order_id', orderData.id)
+                setTransaction_id(orderData.id)
                 console.log(orderData.id);
                   setSuccessMessage(
                     `ORDER ${transaction.status}`,
@@ -105,6 +104,7 @@ const PayPalService = ({ total, items }) => {
       </PayPalScriptProvider>
       
      {SuccesMessage !== '' && <p className='text-center bg-green-600 text-white fixed top-5 left-[150px] md:top-10 md:left-[730px]  z-20 p-2 rounded-lg flex justify-center items-center gap-x-2'> <LiaFortAwesomeAlt size={30}/> {SuccesMessage}</p> }
+     {SuccesMessage !== '' && <p className='text-center bg-black text-white p-2 rounded-lg flex justify-center items-center gap-x-2'><MdEmail size={25} color='white'/> <span>Check Your email Address for Order Details</span></p>}
      {ErrorMessage !== '' && <p> {ErrorMessage}</p> }
     </div>
   )

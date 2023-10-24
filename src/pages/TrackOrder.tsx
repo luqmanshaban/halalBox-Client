@@ -21,14 +21,12 @@ const TrackOrder = () => {
     status: ''
   })
   const [userOrderIDInput, setUserOrderIDInput] = useState('')
-  const orderId = localStorage.getItem('order_id')
-  const orderToFetch = userOrderIDInput ?? orderId
 
   
   const getOrderById = async() => {
-    if (typeof orderToFetch === 'string' && orderToFetch.trim() !== '') {
+    if (userOrderIDInput !== '') {
       try {
-        const response = await axios.get(`https://halalbox.cyclic.app/api/order/${orderToFetch}`);
+        const response = await axios.get(`https://halalbox.cyclic.app/api/order/${userOrderIDInput}`);
         setOrder(response.data);
         if (response.data.status === 'COMPLETED') {
           localStorage.removeItem('order_id');
@@ -37,9 +35,6 @@ const TrackOrder = () => {
       } catch (error) {
         console.error(error);
       }
-    } else {
-      // Handle the case where orderToFetch is an empty string or not a string
-      console.error('Invalid order ID');
     }
   }
  
@@ -67,7 +62,6 @@ const TrackOrder = () => {
    </form>
   )
   
-
   
   useEffect(() => {
     getOrderById()
@@ -87,7 +81,7 @@ const TrackOrder = () => {
             </article>
 
             <article  className={`flex justify-center items-center flex-col gap-y-3 ${order.status !== 'ACTIVE' ? 'opacity-50' : 'opacity-100'}`}>
-              <p className='text-sm'><span className='font-bold'>Order</span> {orderToFetch}</p>
+              <p className='text-sm'><span className='font-bold'>Order</span> {order.transaction_id}</p>
               <div className='md:w-[300px] h-2 bg-orange-400'></div>
               <span>Proccessing</span>
             </article>
@@ -110,7 +104,7 @@ const TrackOrder = () => {
               {order.status !== 'DELIVERING' && <ImCancelCircle size={25} color='red'/>}
             </article>
 
-            <article className={`flex justify-center items-center flex-col ${order.status === 'COMPLETED' && 'opacity-40'}`}>
+            <article className={`flex justify-center items-center flex-col ${order.status !== 'COMPLETED' ? 'opacity-40' : 'opacity-100'}`}>
               <span className='text-white'>delivering</span>
               <div className='md:w-[300px] h-2 bg-orange-400'></div>
               <p>COMPLETED</p>
@@ -122,7 +116,7 @@ const TrackOrder = () => {
             </article>
           </section>}
 
-          {(!order || order.status === '') && <section className='pt-20 py-20 flex md:flex-row flex-col px-10 gap-y-5 gap-x-0 justify-center items-center text-white bg-black'>
+          {(order && order.status === '') && <section className='pt-20 py-20 flex md:flex-row flex-col px-10 gap-y-5 gap-x-0 justify-center items-center text-white bg-black'>
             <article className='md:m-0 mx-3 mt-10 md:w-[50%] w-full'>
               {form}
             </article>
