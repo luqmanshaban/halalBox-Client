@@ -34,7 +34,7 @@ const PayPalService = ({ total, items, setTransaction_id }) => {
           createOrder={async () => {
             setOnPaymentBtnClick(true)
             try {
-              const response = await axios.post("http://localhost:8000/api/orders", {cart});
+              const response = await axios.post("https://halalbox.cyclic.app/api/orders", {cart});
 
               const orderData = response.data;
 
