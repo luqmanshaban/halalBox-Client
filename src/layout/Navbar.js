@@ -45,6 +45,9 @@ const Navbar = () => {
             <li onClick={toggleNav}>
                <Link to='/contact'>Contact Us</Link>
             </li>
+            <li onClick={toggleNav}>
+               <Link to='/order'>Orders</Link>
+            </li>
             <li className='fixed top-7 right-16'>
                 <Link to='/cart'>
                 {count !== 0 && <span className='text-black font-bold fixed top-[10px] right-[70px]'>{count}</span>}
