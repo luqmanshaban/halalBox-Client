@@ -20,10 +20,10 @@ const Navbar = () => {
                 <Link to='/menu'>Menu</Link>
             </li>
             <li>
-            <Link to='/contact'>Contact Us</Link>
+            <Link to='/order'>Orders</Link>
             </li>
             <li>
-            <Link to='/order'>Orders</Link>
+            <Link to='/contact'>Contact Us</Link>
             </li>
             <li className=' bg-black rounded-3xl text-white px-5 py-2 flex justify-center items-center'>
                 <Link to='/cart' className='flex justify-center items-center gap-x-2'>

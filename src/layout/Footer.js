@@ -43,6 +43,7 @@ const Footer = () => {
               <Link to='/' className='text-xl rounded-md border border-white px-5 py-2'>Halal Box</Link>
               <p className='text-slate-300 my-5'>A restaurant that offers an authentic taste of Swahili cuisine.With a menu full of flavorful dishes.
               <a href='https://goo.gl/maps/ewCKjhW536QFsQ6N9' target='_blank' rel='noreferrer' className='uppercase text-blue-600'> Visit us today </a></p>  
+              <Link to='/login' className='underline'>Login</Link>
           </div>
           <form onSubmit={handleSubmit}>
             <p className='text-slate-300 my-5'>Subscribe to receive discount notifications</p>
