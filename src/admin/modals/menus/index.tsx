@@ -48,7 +48,7 @@ const Menus = () => {
       try {
         const token = localStorage.getItem('token');
         axios
-          .delete(`http://localhost:8000/api/menu/${menu._id}`, {
+          .delete(`https://halalbox.cyclic.app/api/menu/${menu._id}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -73,7 +73,7 @@ const Menus = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://localhost:8000/api/menu/${selectedMenu._id}`,
+        `https://halalbox.cyclic.app/api/menu/${selectedMenu._id}`,
         menuWithoutIdAndImage, // Send the object without 'id' and 'image'
         {
           headers: {
@@ -100,7 +100,7 @@ const Menus = () => {
       const token = localStorage.getItem('token');
   
       const response = await axios.post(
-        `http://localhost:8000/api/menu/`,
+        `https://halalbox.cyclic.app/api/menu/`,
         newMenu,
         {
           headers: {
@@ -136,7 +136,7 @@ const Menus = () => {
   const getAllMenus = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8000/api/menu/', {
+      const response = await axios.get('https://halalbox.cyclic.app/api/menu/', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
