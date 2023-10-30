@@ -6,7 +6,8 @@ import { FcProcess, FcShipped } from 'react-icons/fc'
 import { AiFillMedicineBox } from 'react-icons/ai'
 import { RiUserReceived2Fill } from 'react-icons/ri'
 import { TiTickOutline } from 'react-icons/ti'
-import { ImCancelCircle } from 'react-icons/im'
+import { ImCancelCircle } from 'react-icons/im' 
+import { GiConfirmed } from 'react-icons/gi' 
 import Delivery from '../components/Delivery'
 import { Link } from 'react-router-dom'
 
@@ -125,6 +126,11 @@ const TrackOrder = () => {
               <Link to='/menu' className='bg-white text-center my-2 text-black p-2 rounded-lg md:w-[100px]'>Go to Menu</Link>
             </article>
            </section>}
+           
+           <section className='flex justify-center items-center gap-x-3 flex-col gap-y-10 mt-20'>
+            <p className='font-bold text-lg'>Order Received ?</p>
+             <button className='p-2 rounded-lg bg-black text-white opacity-100 flex gap-x-2 items-center'><GiConfirmed size={20}/>Click Here</button>
+           </section>
         </main>
     </div>
   )

@@ -14,19 +14,19 @@ const Navbar = () => {
         <Logo />
         <ul className={`md:flex md:justify-between md:flex-row md:items-center md:gap-x-10 hidden`}>
             <li>
-            <Link to='/'>Home</Link>
+               <Link className='hover:text-orange-700 hover:font-bold transition ease-in-out duration-75' to='/'>Home</Link>
             </li>
             <li>
-                <Link to='/menu'>Menu</Link>
+                <Link className='hover:text-orange-700 hover:font-bold transition ease-in-out duration-75' to='/menu'>Menu</Link>
             </li>
             <li>
-            <Link to='/order'>Orders</Link>
+                <Link className='hover:text-orange-700 hover:font-bold transition ease-in-out duration-75' to='/order'>Orders</Link>
             </li>
             <li>
-            <Link to='/contact'>Contact Us</Link>
+               <Link className='hover:text-orange-700 hover:font-bold transition ease-in-out duration-75' to='/contact'>Contact Us</Link>
             </li>
             <li className=' bg-black rounded-3xl text-white px-5 py-2 flex justify-center items-center'>
-                <Link to='/cart' className='flex justify-center items-center gap-x-2'>
+                <Link  to='/cart' className='flex justify-center items-center gap-x-2'>
                   <BiCartAlt size={30}/>
                   {count !== 0 && <span className='text-white font-bold fixed top-[20px] right-[90px]'>{count}</span>}
                   <span className='text-medium font-semibold'>cart</span>
@@ -37,19 +37,19 @@ const Navbar = () => {
         <div className={`md:hidden transition-transform text-lg  ${!nav ? 'fixed left-[100%] ease-in-out duration-[0.7s]' : 'fixed left-0 top-[80px] px-2 py-20 bg-black text-white w-[80%] shadow-lg ease-in-out duration-[0.7s] h-full'}`}>
         <ul className='flex flex-col gap-y-5 text-lg'>
            <li onClick={toggleNav}>
-               <Link to='/'>Home</Link>
+               <Link className='hover:text-orange-700 hover:font-bold transition ease-in-out duration-75' to='/'>Home</Link>
             </li>
             <li onClick={toggleNav}>
-                <Link to='/menu'>Menu</Link>
+                <Link className='hover:text-orange-700 hover:font-bold transition ease-in-out duration-75' to='/menu'>Menu</Link>
             </li>
             <li onClick={toggleNav}>
-               <Link to='/contact'>Contact Us</Link>
+               <Link className='hover:text-orange-700 hover:font-bold transition ease-in-out duration-75' to='/contact'>Contact Us</Link>
             </li>
             <li onClick={toggleNav}>
-               <Link to='/order'>Orders</Link>
+               <Link className='hover:text-orange-700 hover:font-bold transition ease-in-out duration-75' to='/order'>Orders</Link>
             </li>
             <li className='fixed top-7 right-16'>
-                <Link to='/cart'>
+                <Link className='hover:text-orange-700 hover:font-bold transition ease-in-out duration-75' to='/cart'>
                 {count !== 0 && <span className='text-black font-bold fixed top-[10px] right-[70px]'>{count}</span>}
                   <BiCartAlt size={30} color='black'/>
                 </Link>
