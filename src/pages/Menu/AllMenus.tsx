@@ -1,63 +1,58 @@
 import React, { useContext } from 'react'
 import { MenuContext } from '../../store/MenuContext'
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { GoDotFill } from 'react-icons/go'
 
 type Props = {
   menus: Array<Object>
 }
 
 const AllMenus = () => {
-    const { category, addToCart, handleAdd, handleMinus, itemCount  } = useContext(MenuContext)
+    const { category, addToCart, handleAdd } = useContext(MenuContext)
     
   return (
     <div className='flex gap-x-10 justify-center flex-wrap font-sans'>
-        {
-        
-           category.all && category.all.map((menu: any,id: number) => (
-            <article key={id} className='px-3 border flex flex-col justify-center items-center gap-y-2 md:w-[200px] w-[300px] my-5'>
-                <img src={menu.img} alt={menu.name} className='h-28 w-28 rounded-full h-'/>
-                <h2 className='uppercase font-semibold text-center'>{menu.name}</h2>
-                <p className='font-medium'>ksh {menu.price}</p>
-                <figure className='flex gap-x-3 items-center justify-center'>
-                  <button onClick={() => handleAdd(menu.name)} disabled={((itemCount[menu.name]) >= 5)} className='bg-orange-600 p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlinePlus color='white' size={15}/>
-                  </button>
-                  <p>{itemCount[menu.name] || 0}</p>
-                  <button onClick={() => handleMinus(menu.name)} disabled={(itemCount[menu.name] || 0 ) === 0} className='bg-orange-600  p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlineMinus color='white' size={15}/>
-                  </button>
-                </figure>
-                <button onClick={() => addToCart(menu.name, menu.price, menu.img, itemCount[menu.name])} className='bg-black text-white px-5 py-2 w-full'>Add To Cart</button>
-            </article>
-           ))
-        
-        }
+      {
+        category.all && category.all.map((menu: any,id: number) => (
+          <article key={id} className='text-black p-3 shadow-lg bg-slate-100 rounded-lg flex flex-col gap-y-3 md:w-[300px] md:h-[300px] h-[300px] w-full md:mx-0 mx-10 my-10'>
+            <img className="h-[50%] rounded-lg" src={menu.img} alt={menu.name} />
+            <h1 className='font-bold text-xl'>{menu.name}</h1>
+            <p className='flex justify-start items-center gap-x-2 text-gray-500'>
+              <span>category</span>
+              <GoDotFill color='grey'/>
+              <span>{menu.category}</span>
+            </p>
+            <figure className='flex justify-between items-center text-gray-500'>
+              <h1 className='font-bold text-black italic text-lg'>ksh: {menu.price}</h1>
+              <button onClick={() => addToCart(menu.name, menu.price, menu.img, handleAdd(menu.name))} className='bg-orange-500 p-3 rounded-full'><AiOutlinePlus color='white' size={20}/></button>
+            </figure>
+          </article>
+        ))
+      }
     </div>
   )
 }
 const Meals = () => {
-    const { category, addToCart, handleAdd, handleMinus, itemCount  } = useContext(MenuContext)
+    const { category, addToCart, handleAdd } = useContext(MenuContext)
     
   return (
     <div className='flex gap-x-10 justify-center flex-wrap font-sans'>
         {
         
            category.meals && category.meals.map((menu: any,id: number) => (
-            <article key={id} className='px-3 border flex flex-col justify-center items-center gap-y-2 md:w-[200px] w-[300px] my-5'>
-                <img src={menu.img} alt={menu.name} className='h-28 w-28 rounded-full h-'/>
-                <h2 className='uppercase font-semibold text-center'>{menu.name}</h2>
-                <p className='font-medium'>ksh {menu.price}</p>
-                <figure className='flex gap-x-3 items-center justify-center'>
-                  <button onClick={() => handleAdd(menu.name)} disabled={((itemCount[menu.name]) >= 5)} className='bg-orange-600 p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlinePlus color='white' size={15}/>
-                  </button>
-                  <p>{itemCount[menu.name] || 0}</p>
-                  <button onClick={() => handleMinus(menu.name)} disabled={(itemCount[menu.name] || 0 ) === 0} className='bg-orange-600  p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlineMinus color='white' size={15}/>
-                  </button>
-                </figure>
-                <button onClick={() => addToCart(menu.name, menu.price, menu.img, itemCount[menu.name])} className='bg-black text-white px-5 py-2 w-full'>Add To Cart</button>
-            </article>
+            <article key={id} className='text-black p-3 shadow-lg bg-slate-100 rounded-lg flex flex-col gap-y-3 md:w-[300px] md:h-[300px] h-[300px] w-full md:mx-0 mx-10 my-10'>
+            <img className="h-[50%] rounded-lg" src={menu.img} alt={menu.name} />
+            <h1 className='font-bold text-xl'>{menu.name}</h1>
+            <p className='flex justify-start items-center gap-x-2 text-gray-500'>
+              <span>category</span>
+              <GoDotFill color='grey'/>
+              <span>{menu.category}</span>
+            </p>
+            <figure className='flex justify-between items-center text-gray-500'>
+              <h1 className='font-bold text-black italic text-lg'>ksh: {menu.price}</h1>
+              <button onClick={() => addToCart(menu.name, menu.price, menu.img,handleAdd(menu.name))} className='bg-orange-500 p-3 rounded-full'><AiOutlinePlus color='white' size={20}/></button>
+            </figure>
+          </article>
            ))
         
         }
@@ -65,28 +60,26 @@ const Meals = () => {
   )
 }
 const Top = () => {
-    const { category, addToCart, handleAdd, handleMinus, itemCount  } = useContext(MenuContext)
+    const { category, addToCart, handleAdd } = useContext(MenuContext)
     
   return (
     <div className='flex gap-x-10 justify-center flex-wrap font-sans'>
         {
         
            category.topPick && category.topPick.map((menu: any,id: number) => (
-            <article key={id} className='px-3 border flex flex-col justify-center items-center gap-y-2 md:w-[200px] w-[300px] my-5'>
-                <img src={menu.img} alt={menu.name} className='h-28 w-28 rounded-full h-'/>
-                <h2 className='uppercase font-semibold text-center'>{menu.name}</h2>
-                <p className='font-medium'>ksh {menu.price}</p>
-                <figure className='flex gap-x-3 items-center justify-center'>
-                  <button onClick={() => handleAdd(menu.name)} disabled={((itemCount[menu.name]) >= 5)} className='bg-orange-600 p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlinePlus color='white' size={15}/>
-                  </button>
-                  <p>{itemCount[menu.name] || 0}</p>
-                  <button onClick={() => handleMinus(menu.name)} disabled={(itemCount[menu.name] || 0 ) === 0} className='bg-orange-600  p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlineMinus color='white' size={15}/>
-                  </button>
-                </figure>
-                <button onClick={() => addToCart(menu.name, menu.price, menu.img, itemCount[menu.name])} className='bg-black text-white px-5 py-2 w-full'>Add To Cart</button>
-            </article>
+            <article key={id} className='text-black p-3 shadow-lg bg-slate-100 rounded-lg flex flex-col gap-y-3 md:w-[300px] md:h-[300px] h-[300px] w-full md:mx-0 mx-10 my-10'>
+            <img className="h-[50%] rounded-lg" src={menu.img} alt={menu.name} />
+            <h1 className='font-bold text-xl'>{menu.name}</h1>
+            <p className='flex justify-start items-center gap-x-2 text-gray-500'>
+              <span>category</span>
+              <GoDotFill color='grey'/>
+              <span>{menu.category}</span>
+            </p>
+            <figure className='flex justify-between items-center text-gray-500'>
+              <h1 className='font-bold text-black italic text-lg'>ksh: {menu.price}</h1>
+              <button onClick={() => addToCart(menu.name, menu.price, menu.img,handleAdd(menu.name))} className='bg-orange-500 p-3 rounded-full'><AiOutlinePlus color='white' size={20}/></button>
+            </figure>
+          </article>
            ))
         
         }
@@ -94,28 +87,26 @@ const Top = () => {
   )
 }
 const Drinks = () => {
-    const { category, addToCart, handleAdd, handleMinus, itemCount  } = useContext(MenuContext)
+    const { category, addToCart, handleAdd } = useContext(MenuContext)
     
   return (
     <div className='flex gap-x-10 justify-center flex-wrap font-sans'>
         {
         
            category.drinks && category.drinks.map((menu: any,id: number) => (
-            <article key={id} className='px-3 border flex flex-col justify-center items-center gap-y-2 md:w-[200px] w-[300px] my-5'>
-                <img src={menu.img} alt={menu.name} className='h-28 w-28 rounded-full h-'/>
-                <h2 className='uppercase font-semibold text-center'>{menu.name}</h2>
-                <p className='font-medium'>ksh {menu.price}</p>
-                <figure className='flex gap-x-3 items-center justify-center'>
-                  <button onClick={() => handleAdd(menu.name)} disabled={((itemCount[menu.name]) >= 5)} className='bg-orange-600 p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlinePlus color='white' size={15}/>
-                  </button>
-                  <p>{itemCount[menu.name] || 0}</p>
-                  <button onClick={() => handleMinus(menu.name)} disabled={(itemCount[menu.name] || 0 ) === 0} className='bg-orange-600  p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlineMinus color='white' size={15}/>
-                  </button>
-                </figure>
-                <button onClick={() => addToCart(menu.name, menu.price, menu.img, itemCount[menu.name])} className='bg-black text-white px-5 py-2 w-full'>Add To Cart</button>
-            </article>
+            <article key={id} className='text-black p-3 shadow-lg bg-slate-100 rounded-lg flex flex-col gap-y-3 md:w-[300px] md:h-[300px] h-[300px] w-full md:mx-0 mx-10 my-10'>
+            <img className="h-[50%] rounded-lg" src={menu.img} alt={menu.name} />
+            <h1 className='font-bold text-xl'>{menu.name}</h1>
+            <p className='flex justify-start items-center gap-x-2 text-gray-500'>
+              <span>category</span>
+              <GoDotFill color='grey'/>
+              <span>{menu.category}</span>
+            </p>
+            <figure className='flex justify-between items-center text-gray-500'>
+              <h1 className='font-bold text-black italic text-lg'>ksh: {menu.price}</h1>
+              <button onClick={() => addToCart(menu.name, menu.price, menu.img,handleAdd(menu.name))} className='bg-orange-500 p-3 rounded-full'><AiOutlinePlus color='white' size={20}/></button>
+            </figure>
+          </article>
            ))
         
         }
@@ -123,28 +114,26 @@ const Drinks = () => {
   )
 }
 const Snacks = () => {
-    const { category, addToCart, handleAdd, handleMinus, itemCount  } = useContext(MenuContext)
+    const { category, addToCart, handleAdd } = useContext(MenuContext)
     
   return (
     <div className='flex gap-x-10 justify-center flex-wrap font-sans'>
         {
         
            category.snacks && category.snacks.map((menu: any,id: number) => (
-            <article key={id} className='px-3 border flex flex-col justify-center items-center gap-y-2 md:w-[200px] w-[300px] my-5'>
-                <img src={menu.img} alt={menu.name} className='h-28 w-28 rounded-full h-'/>
-                <h2 className='uppercase font-semibold text-center'>{menu.name}</h2>
-                <p className='font-medium'>ksh {menu.price}</p>
-                <figure className='flex gap-x-3 items-center justify-center'>
-                  <button onClick={() => handleAdd(menu.name)} disabled={((itemCount[menu.name]) >= 5)} className='bg-orange-600 p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlinePlus color='white' size={15}/>
-                  </button>
-                  <p>{itemCount[menu.name] || 0}</p>
-                  <button onClick={() => handleMinus(menu.name)} disabled={(itemCount[menu.name] || 0 ) === 0} className='bg-orange-600  p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlineMinus color='white' size={15}/>
-                  </button>
-                </figure>
-                <button onClick={() => addToCart(menu.name, menu.price, menu.img, itemCount[menu.name])} className='bg-black text-white px-5 py-2 w-full'>Add To Cart</button>
-            </article>
+            <article key={id} className='text-black p-3 shadow-lg bg-slate-100 rounded-lg flex flex-col gap-y-3 md:w-[300px] md:h-[300px] h-[300px] w-full md:mx-0 mx-10 my-10'>
+            <img className="h-[50%] rounded-lg" src={menu.img} alt={menu.name} />
+            <h1 className='font-bold text-xl'>{menu.name}</h1>
+            <p className='flex justify-start items-center gap-x-2 text-gray-500'>
+              <span>category</span>
+              <GoDotFill color='grey'/>
+              <span>{menu.category}</span>
+            </p>
+            <figure className='flex justify-between items-center text-gray-500'>
+              <h1 className='font-bold text-black italic text-lg'>ksh: {menu.price}</h1>
+              <button onClick={() => addToCart(menu.name, menu.price, menu.img,handleAdd(menu.name))} className='bg-orange-500 p-3 rounded-full'><AiOutlinePlus color='white' size={20}/></button>
+            </figure>
+          </article>
            ))
         
         }
@@ -152,28 +141,26 @@ const Snacks = () => {
   )
 }
 const SandWiches = () => {
-    const { category, addToCart, handleAdd, handleMinus, itemCount  } = useContext(MenuContext)
+    const { category, addToCart, handleAdd } = useContext(MenuContext)
     
   return (
     <div className='flex gap-x-10 justify-center flex-wrap font-sans'>
         {
         
            category.shawarma && category.shawarma.map((menu: any,id: number) => (
-            <article key={id} className='px-3 border flex flex-col justify-center items-center gap-y-2 md:w-[200px] w-[300px] my-5'>
-                <img src={menu.img} alt={menu.name} className='h-28 w-28 rounded-full h-'/>
-                <h2 className='uppercase font-semibold text-center'>{menu.name}</h2>
-                <p className='font-medium'>ksh {menu.price}</p>
-                <figure className='flex gap-x-3 items-center justify-center'>
-                  <button onClick={() => handleAdd(menu.name)} disabled={((itemCount[menu.name]) >= 5)} className='bg-orange-600 p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlinePlus color='white' size={15}/>
-                  </button>
-                  <p>{itemCount[menu.name] || 0}</p>
-                  <button onClick={() => handleMinus(menu.name)} disabled={(itemCount[menu.name] || 0 ) === 0} className='bg-orange-600  p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlineMinus color='white' size={15}/>
-                  </button>
-                </figure>
-                <button onClick={() => addToCart(menu.name, menu.price, menu.img, itemCount[menu.name])} className='bg-black text-white px-5 py-2 w-full'>Add To Cart</button>
-            </article>
+            <article key={id} className='text-black p-3 shadow-lg bg-slate-100 rounded-lg flex flex-col gap-y-3 md:w-[300px] md:h-[300px] h-[300px] w-full md:mx-0 mx-10 my-10'>
+            <img className="h-[50%] rounded-lg" src={menu.img} alt={menu.name} />
+            <h1 className='font-bold text-xl'>{menu.name}</h1>
+            <p className='flex justify-start items-center gap-x-2 text-gray-500'>
+              <span>category</span>
+              <GoDotFill color='grey'/>
+              <span>{menu.category}</span>
+            </p>
+            <figure className='flex justify-between items-center text-gray-500'>
+              <h1 className='font-bold text-black italic text-lg'>ksh: {menu.price}</h1>
+              <button onClick={() => addToCart(menu.name, menu.price, menu.img,handleAdd(menu.name))} className='bg-orange-500 p-3 rounded-full'><AiOutlinePlus color='white' size={20}/></button>
+            </figure>
+          </article>
            ))
         
         }
@@ -181,28 +168,26 @@ const SandWiches = () => {
   )
 }
 const Searched: React.FC<Props> = ({ menus }) => {
-    const { addToCart, handleAdd, handleMinus, itemCount  } = useContext(MenuContext)
+    const { addToCart, handleAdd } = useContext(MenuContext)
     
   return (
     <div className='flex gap-x-10 justify-center flex-wrap font-sans'>
         {
         
            menus && menus.map((menu: any,id: number) => (
-            <article key={id} className='px-3 border flex flex-col justify-center items-center gap-y-2 md:w-[200px] w-[300px] my-5'>
-                <img src={menu.img} alt={menu.name} className='h-28 w-28 rounded-full h-'/>
-                <h2 className='uppercase font-semibold text-center'>{menu.name}</h2>
-                <p className='font-medium'>ksh {menu.price}</p>
-                <figure className='flex gap-x-3 items-center justify-center'>
-                  <button onClick={() => handleAdd(menu.name)} disabled={((itemCount[menu.name]) >= 5)} className='bg-orange-600 p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlinePlus color='white' size={15}/>
-                  </button>
-                  <p>{itemCount[menu.name] || 0}</p>
-                  <button onClick={() => handleMinus(menu.name)} disabled={(itemCount[menu.name] || 0 ) === 0} className='bg-orange-600  p-2 flex justify-center items-center rounded-full'>
-                    <AiOutlineMinus color='white' size={15}/>
-                  </button>
-                </figure>
-                <button onClick={() => addToCart(menu.name, menu.price, menu.img, itemCount[menu.name])} className='bg-black text-white px-5 py-2 w-full'>Add To Cart</button>
-            </article>
+            <article key={id} className='text-black p-3 shadow-lg bg-slate-100 rounded-lg flex flex-col gap-y-3 md:w-[300px] md:h-[300px] h-[300px] w-full md:mx-0 mx-10 my-10'>
+            <img className="h-[50%] rounded-lg" src={menu.img} alt={menu.name} />
+            <h1 className='font-bold text-xl'>{menu.name}</h1>
+            <p className='flex justify-start items-center gap-x-2 text-gray-500'>
+              <span>category</span>
+              <GoDotFill color='grey'/>
+              <span>{menu.category}</span>
+            </p>
+            <figure className='flex justify-between items-center text-gray-500'>
+              <h1 className='font-bold text-black italic text-lg'>ksh: {menu.price}</h1>
+              <button onClick={() => addToCart(menu.name, menu.price, menu.img,handleAdd(menu.name))} className='bg-orange-500 p-3 rounded-full'><AiOutlinePlus color='white' size={20}/></button>
+            </figure>
+          </article>
            ))
         
         }

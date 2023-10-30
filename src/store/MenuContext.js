@@ -69,7 +69,7 @@ const MenuProvider= ({ children }) => {
       }
     }
 
-    const meals = menus.filter(menu => menu.category === 'meals')
+    const meals = menus.sort().filter(menu => menu.category === 'meals')
     const snacks = menus.filter(menu => menu.category === 'snacks')
     const drinks = menus.filter(menu => menu.category === 'drinks')
     const shawarma = menus.filter(menu => menu.category === 'shawarma')

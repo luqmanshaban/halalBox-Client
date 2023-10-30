@@ -4,6 +4,7 @@ import { AiOutlineHome, AiOutlineHistory, AiFillMessage } from 'react-icons/ai'
 import { PiCookingPotBold } from 'react-icons/pi'
 import { GiMeal } from 'react-icons/gi'
 import { MdExitToApp } from 'react-icons/md'
+import { GoDotFill } from 'react-icons/go'
 
 type Props = {
     toggleComponent: (index: number) => void
@@ -22,7 +23,8 @@ const Sidebar: React.FC<Props> = ({ toggleComponent }) => {
             <li className='cursor-pointer' onClick={() => toggleComponent(0)}>
                 <AiOutlineHome color='white' size={30} />
             </li>
-            <li className='cursor-pointer' onClick={() => toggleComponent(1)}>
+            <li className='cursor-pointer flex justify-center items-center flex-col' onClick={() => toggleComponent(1)}>
+                <div className='ml-5 relative top-1 right-0'><GoDotFill color='orange' size={20}/></div>
                 <PiCookingPotBold color='white' size={30} />
             </li>
             <li className='cursor-pointer' onClick={() => toggleComponent(2)}>

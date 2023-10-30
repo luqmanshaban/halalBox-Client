@@ -1,8 +1,14 @@
 import React from 'react'
+import { OrderProvider } from '../../../store/OrderContext'
+import ActiveOrders from './ActiveOrders'
 
 const Orders = () => {
+  
   return (
-    <div>Orders</div>
+    <OrderProvider>
+      <div>Orders</div>
+      <ActiveOrders />
+    </OrderProvider>
   )
 }
 
