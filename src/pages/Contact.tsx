@@ -1,52 +1,74 @@
-import React, { FormEventHandler, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import Navbar from '../layout/Navbar'
 import { BsFacebook } from 'react-icons/bs'
 import { BsInstagram } from 'react-icons/bs'
 import { BsTelephonePlus } from 'react-icons/bs'
-import { send } from 'emailjs-com';
 import Footer from '../layout/Footer'
+import axios from 'axios'
+
+type EmailType = {
+  names: string
+  email: string 
+  subject: string 
+  message: string
+}
+
+type ResponseType = {
+  success: string,
+  error: string
+}
 
 const Contact = () => {
-  const [emailResponse, setEmailResponse] = useState('')
-  const [showMessage, setShowMessage] = useState(false);
+  const [emailResponse, setEmailResponse] = useState<ResponseType>({
+    success: '',
+    error: ''
+  })
+  const response = emailResponse.success !== '' ? emailResponse.success : emailResponse.error
+  const [email, setEmail] = useState<EmailType>({names: '', email: '', subject: '', message: ''})
 
-  const sendEmail: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-  
-    const formData = new FormData(e.currentTarget);
-    const from_name = formData.get("names") as string;
-    const from_subject = formData.get("subject") as string;
-    const from_email = formData.get("email") as string;
-    const message = formData.get("message") as string;
-  
-    send(
-      "service_0cf7cob",
-      "template_a0dq95n",
-      {
-        from_name,
-        from_subject,
-        from_email,
-        message,
-      },
-      "sNSLWQXTeDLQX15HW"
-    )
-      .then((response) => {
-        handleResponse(true)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setEmail(prev => ({...prev, [name]: value}))
+  }
+
+  const handleMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setEmail((prevEmail) => ({ ...prevEmail, [name]: value }));
+  }
+
+
+  const sendEmail = async(e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    
+    try {
+      const response: any = await axios.post('http://localhost:8000/api/messages', email)
+      setEmailResponse({
+        success: response.data.success,
+        error: ''
       })
-      .catch((err) => {
-        handleResponse(false)
-      });
-  
-    e.currentTarget.reset();
+      setTimeout(() => {
+        setEmail({names: '', email: '', subject: '', message: ''})
+        setEmailResponse({
+          success: '',
+          error: ''
+        })
+      }, 3000)
+      
+    } catch (error: any) {
+      console.log(error.message)
+      setEmailResponse({
+        success: '',
+        error: error.message
+      })
+      setTimeout(() => {
+        setEmailResponse({
+          success: '',
+          error: ''
+        })
+      }, 3000)
+    }
   };
 
-  const handleResponse = (success: boolean) => {
-    setEmailResponse(success ? 'Email sent successfully!' : 'Failed to send email.');
-    setShowMessage(true);
-    setTimeout(() => {
-      setShowMessage(false);
-    }, 3000);
-  };
   return (
     <div>
         <header>
@@ -65,9 +87,11 @@ const Contact = () => {
                         Full Name
                       </label>
                       <input
+                      required
                         type="text"
-                        name="name"
+                        name="names"
                         id="name"
+                        onChange={handleChange}
                         placeholder="Full Name"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
@@ -80,9 +104,11 @@ const Contact = () => {
                         Email Address
                       </label>
                       <input
+                      required
                         type="email"
                         name="email"
                         id="email"
+                        onChange={handleChange}
                         placeholder="example@domain.com"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
@@ -95,10 +121,12 @@ const Contact = () => {
                         Subject
                       </label>
                       <input
+                      required
                         type="text"
                         name="subject"
                         id="subject"
-                        placeholder="Enter your subject"
+                        onChange={handleChange}
+                        placeholder="Enter subject"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
                     </div>
@@ -113,23 +141,22 @@ const Contact = () => {
                         rows={4}
                         name="message"
                         id="message"
+                        onChange={handleMessage}
                         placeholder="Type your message"
                         className="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       ></textarea>
                     </div>
+                    {(emailResponse.error !== '' || emailResponse.success !== '') && <div >
+                      <p className={emailResponse.success !== '' ? 'text-center p-3 my-2 rounded-md text-white bg-green-500 font-sans font-medium' : 'text-center p-3 rounded-md text-white bg-red-600 font-sans font-medium'}>{response}</p>
+                    </div>}
                     <div>
                    <button
-                     className="hover:shadow-form rounded-md bg-black py-3 px-8 text-base font-semibold text-white outline-none"
+                     className="hover:shadow-form rounded-md w-full bg-black py-3 px-8 text-base font-semibold text-white outline-none"
                    >
-                     Submit
+                     Send
                    </button>
                  </div>
                </form>
-               {showMessage && (
-            <div className={emailResponse.includes('success') ? 'p-3 rounded-md text-white bg-green-500 font-sans font-medium' : 'p-3 rounded-md text-white bg-red-600 font-sans font-medium'}>
-              <p>{emailResponse}</p>
-            </div>
-        )}
             </div>
           </div>
           {/* <span className='h-[1px] w-[70%] bg-black'></span> */}
