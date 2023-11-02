@@ -1,26 +1,13 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-
-type ItemType = {
-  name: string
-}
-type OrderType = {
-  _id: string
-  items: Array<ItemType>
-  email: string
-  address: string
-  amount: number
-  status: string
-  name: string
-  transaction_id: string
-}
+import { OrderType, ItemType } from '../../../types/types';
 
 const History = () => {
   const [orders, setOrders] = useState<OrderType[]>()
 
   const getOrders = async() => {
     try {
-      const response = await axios.get('https://halalbox.cyclic.app/api/all-orders')
+      const response = await axios.get('https://halalbox.cyclic.app/api/complete-orders')
       setOrders(response.data)
       console.log(response.data);
     } catch (error) {

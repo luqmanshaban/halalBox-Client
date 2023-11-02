@@ -5,6 +5,18 @@ export const OrderContext = createContext()
 
 export const OrderProvider = ({ children }) => {
     const [activeOrders, setActiveOrders] = useState([])
+    const [orders, setOrders] = useState()
+
+    const getOrders = async() => {
+        try {
+          const response = await axios.get('https://halalbox.cyclic.app/api/all-orders')
+          setOrders(response.data)
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+          
+        }
+      }
 
     const OrderReceived = async (id) => {
         try {
@@ -27,11 +39,13 @@ export const OrderProvider = ({ children }) => {
 
     useEffect(() => {
         getActiveOrders()
+        getOrders()
     }, [])
 
     const context = {
         activeOrders,
         OrderReceived,
+        orders
     }
     return(
         <OrderContext.Provider value={context}>

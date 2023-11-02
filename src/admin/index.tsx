@@ -8,10 +8,10 @@ const Admin = () => {
   
   return (
     <div className='flex justify-start gap-x-28'>
-      <header className='bg-black h-[100vh] p-2 py-5 md:w-[10%] w-[30%] fixed'>
+      <header className='bg-black h-[100vh] p-2 py-5 md:w-[15%] w-[30%] fixed'>
         <Sidebar toggleComponent={toggleComponent} active={active}/>
       </header>
-      <main className='md:w-[75%] md:ml-44'>
+      <main className='md:w-[75%] md:ml-72'>
         <Main active={active}/>
       </main>
     </div>

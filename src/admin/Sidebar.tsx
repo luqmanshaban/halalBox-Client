@@ -26,7 +26,7 @@ const Sidebar: React.FC<Props> = ({ toggleComponent, active }) => {
             </li>
             <li className={`text-white flex items-center justify-center gap-x-2 cursor-pointer ${active[1] ? 'bg-gray-500 rounded-xl w-full p-2' : ''}`} onClick={() => toggleComponent(1)}>
                 <PiCookingPotBold color='white' size={30} />
-                <p>Menus</p>
+                <p>Orders</p>
             </li>
             <li className={`text-white flex items-center justify-center gap-x-2 cursor-pointer ${active[2] ? 'bg-gray-500 rounded-xl w-full p-2' : ''}`} onClick={() => toggleComponent(2)}>
                 <GiMeal color='white' size={30} />

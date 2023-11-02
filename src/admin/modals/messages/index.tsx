@@ -28,7 +28,7 @@ const Messages = () => {
   },[])
   return (
     <div>
-      <table className='w-full p-5 border border-black m-5 font-sans'>
+      <table className='w-full border border-black m-5 font-sans'>
         <thead className='w-full border border-gray-500 p-2 rounded-md'>
           <tr>
             <th className='border border-gray-800 p-2'>Names</th>
